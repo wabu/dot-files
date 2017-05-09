@@ -1,0 +1,137 @@
+URxvt*font: xft:Fira Code:pixelsize=9:antialias=1:autohint=1:hinting=1:hintstyle=hintmedium:lcdfilter=lcddefault:rgba=rgb
+
+!urxvt.perl-ext-common: font-size,default,matcher
+urxvt.keysym.C-Up:     perl:font-size:increase
+urxvt.keysym.C-Down:   perl:font-size:decrease
+urxvt.keysym.C-S-Up:   perl:font-size:incglobal
+urxvt.keysym.C-S-Down: perl:font-size:decglobal
+
+URxvt.depth: 32
+URxvt.transparent: false
+URxvt.urgentonbell: true
+URxvt.visualBell: true
+URxvt.loginShell: false
+URxvt.internalBorder: 0
+URxvt.lineSpace: 0
+
+URxvt*letterSpace: 0
+URxvt.scrollstyle: plain
+URxvt.matcher.button: 1
+URxvt.urlLauncher: firefox
+
+URxvt.cursorBlink: true
+URxvt.cursorColor: #657b83
+URxvt.cursorUnderline: false
+URxvt.intensityStyles: false
+
+urxvt*scrollColor: #DADAEA
+
+*color0: #112266
+*color1: #ff1133
+*color2: #009955
+*color3: #ffaa11
+*color4: #1122ff
+*color5: #dd22dd
+*color6: #11bbdd
+*color7: #ccccea
+*color8: #112233
+*color9: #ee2255
+*color10: #00ee77
+*color11: #ffaa11
+*color12: #0011dd
+*color13: #dd22dd
+*color14: #11ccdd
+*color15: #eeeeef
+
+urxvt*jumpScroll:True
+urxvt*scrollWithBuffer:false
+urxvt*visualBell:true
+urxvt*scrollTtyOutput:false
+urxvt*scrollTtyKeypress:true
+urxvt*saveLines:16384
+urxvt*termName:xterm-256color
+
+!xterm*font: -*-dina-medium-r-*-*-13-*-*-*-*-*-*-*
+xosview*font: -*-terminal-*-*-*-*-*-*-*-*-*-*-*-*
+xosview*captions: False
+xosview*labels: True
+xosview*meterLabelColor: #CECEDE
+xosview*usedlabels: True
+xosview*usedLabelColor: #3A3A6A
+xosview*background: #EEEEEF
+xosview*foreground: #CECEDE
+xosview*graphNumCols: 256
+
+xosview*load: True
+xosview*loadGraph: True
+xosview*loadPriority: 10
+xosview*loadWarnColor: #FFD324
+xosview*loadProcColor: #AEAECE
+xosview*loadIdleColor: #DADAEA
+xosview*loadWarnThreshold: 4
+xosview*loadCpuSpeed: True
+
+xosview*cpu: True
+xosview*cpuDecay: True
+xosview*cpuGraph: True
+xosview*cpuFormat: all
+xosview*cpuUserColor: #AEAECE
+xosview*cpuNiceColor: #DAEFBA
+xosview*cpuSystemColor: #FFD324
+xosview*cpuInterruptColor: #AF2040
+xosview*cpuFreeColor: #DADAEA
+
+xosview*mem: True
+xosview*memGraph: True
+
+xosview*memUsedColor: #AEAECE
+xosview*memSharedColor: #DADAEA
+xosview*memBufferColor: #FFD384
+xosview*memCacheColor: #DAEFBA
+xosview*memFreeColor: #DADAEA
+
+xosview*swap: True
+xosview*swapGraph: True
+
+xosview*swapUsedColor: #AEAECE
+xosview*swapFreeColor: #DADAEA
+
+xosview*page: True
+xosview*pageGraph: True
+xosview*pagePriority: 10
+
+xosview*pageInColor: #B6D870
+xosview*pageOutColor: #FFD324
+xosview*pageIdleColor: #DADAEA
+
+xosview*gfx: True
+xosview*gfxGraph: True
+
+xosview*net: True
+xosview*netGraph: True
+xosview*netPriority: 10
+xosview*netBandwidth: 2000000
+xosview*netIface: False
+xosview*netInColor: #B6D870
+xosview*netOutColor: #FFD324
+xosview*netBackground: #DADAEA
+
+xosview*interrupts: False
+
+xosview*disk: True
+xosview*diskGraph: True
+xosview*diskUsedColor: #AEAECE
+xosview*diskIdleColor: #DADAEA
+xosview*diskWriteColor: #FFD324
+xosview*diskReadColor: #B6D870
+
+xosview*lmstemp: False
+xosview*lmstempGraph: True
+xosview*lmstempHighest: 100
+xosview*lmstempActColor: #AEAECE
+xosview*lmstempHighColor: #FFD324
+xosview*lmstempIdleColor: #DADAEA
+xosview*lmstempLabel1: CPU
+xosview*lmstemp1: temp1
+xosview*lmstempLabel2: DSK
+xosview*lmstemp2: temp7
