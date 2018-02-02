@@ -30,14 +30,9 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
+    xterm-color|*-256color|screen) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -56,23 +51,26 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+if [ -f .bash_git ]; then
+  source .bash_git
+fi
+
 if [ "$color_prompt" = yes ]; then
   PROMPT_COMMAND='STATUS=$?; RELATIVE=${PWD/${ROOT_PWD}/.}; echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/${HOME}/~}/\007"'
+  case `hostname` in
+      deukalion) col=36;;
+      kottos) col=34;;
+      gyges) col=30;;
+      themis) col=35;;
+      tethys) col=32;;
+      *) col=33;;
+  esac
 
-  PS1='\[\033[00;04m\]\u\[\033[37m\]@\[\033[33m\]\h\[\033[00;33m\]/ \[\033[00;04;34m\]\w\[\033[00;34m\]/$(__git_ps1 " [%s]") \[\033[00;04;31m\]${STATUS/0/}\[\033[00m\]\$ \[\033[00m\]'
+  PS1='\[\033[00;04m\]\u\[\033[37m\]@\[\033['$col'm\]\h\[\033[00;04;34m\] \w\[\033[00;34m\]/$(__git_ps1 " [%s]") \[\033[00;04;31m\]${STATUS/0/}\[\033[00m\]\$ \[\033[00m\]'
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    PS1='\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -114,4 +112,12 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# some customizations
 export EDITOR=vim
+
+export PATH=/opt/anaconda/bin:$PATH
+
+# enable good old eiabox
+[ -d /usr/java/default ] && export JAVA_HOME=/usr/java/default/
+[ -d /opt/eiabox ] && { pushd /opt/eiabox; source sourceit.env; popd; } > /dev/null
+
