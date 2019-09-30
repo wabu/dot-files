@@ -1,4 +1,4 @@
-URxvt*font: xft:Fira Code:pixelsize=9:antialias=1:autohint=1:hinting=1:hintstyle=hintmedium:lcdfilter=lcddefault:rgba=rgb
+URxvt*font: xft:Fira Code:pixelsize=9:antialias=true:autohint=true:hinting=true:hintstyle=hintmedium:lcdfilter=lcddefault:rgba=rgb
 
 !urxvt.perl-ext-common: font-size,default,matcher
 urxvt.keysym.C-Up:     perl:font-size:increase
@@ -41,7 +41,7 @@ urxvt*scrollColor: #DADAEA
 *color12: #0011dd
 *color13: #dd22dd
 *color14: #11ccdd
-*color15: #eeeeef
+*color15: #fefcff
 
 urxvt*jumpScroll:True
 urxvt*scrollWithBuffer:false
