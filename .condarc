@@ -1,4 +1,1 @@
-channels:
- - conda-forge
- - defaults
-auto_update_conda: True
+auto_activate_base: true

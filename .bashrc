@@ -25,10 +25,7 @@ shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-#shopt -s globstar
-
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+shopt -s globstar
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
@@ -51,8 +48,8 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-if [ -f .bash_git ]; then
-  source .bash_git
+if [ -f /usr/share/git/git-prompt.sh ]; then
+  source /usr/share/git/git-prompt.sh
 fi
 
 if [ "$color_prompt" = yes ]; then
@@ -115,9 +112,65 @@ fi
 # some customizations
 export EDITOR=vim
 
-export PATH=/opt/anaconda/bin:$PATH
+if [ -x /opt/anaconda/bin/conda ]; then
+  export PATH=/opt/anaconda/bin:$PATH
+elif [ -x ~/install/conda/bin/conda ]; then
+  export PATH=~/install/conda/bin:$PATH
+fi
 
 # enable good old eiabox
 [ -d /usr/java/default ] && export JAVA_HOME=/usr/java/default/
 [ -d /opt/eiabox ] && { pushd /opt/eiabox; source sourceit.env; popd; } > /dev/null
 
+eval "$(thefuck --alias)"
+#eval "$(thefuck --alias --enable-experimental-instant-mode)"
+
+#for some nvim stuff?
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/wabu/install/conda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/wabu/install/conda/etc/profile.d/conda.sh" ]; then
+        . "/home/wabu/install/conda/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/wabu/install/conda/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+# auto conda-env
+chdir() {
+    previous="$(realpath .)"
+    builtin "$@"
+    current="$(realpath .)"
+    
+    name="$([ -f environment.yml ] \
+            && grep name environment.yml \
+	    | sed 's/name\s*:\s*//;s/#.*$//')"
+    if [[ "$name" != "$CONDA_DEFAULT_ENV" ]]; then
+        if [[ -v CONDA_AUTOENV ]] && 
+           ! [[ $current/ == "$CONDA_AUTOENV"/* ]]; then
+            echo ">> autoenv: leaving $CONDA_DEFAULT_ENV ($CONDA_AUTOENV)"
+            conda deactivate
+            unset CONDA_AUTOENV
+        fi
+	if [[ -n "$name" ]]; then
+    	    export CONDA_AUTOENV="$current"
+	    echo ">> autoenv: activating $name (environment.yaml)"
+            conda activate "$name"
+	fi
+    fi
+
+
+    if [ -d .git ]; then
+        git status --short
+    fi
+}
+alias cd='chdir cd'
+alias pushd='chdir pushd'
+alias popd='chdir popd'
