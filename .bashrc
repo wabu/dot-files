@@ -168,7 +168,7 @@ chdir() {
 
 
     if [ -d .git ]; then
-        git status --short
+        git status --short --branch
     fi
 }
 alias cd='chdir cd'
