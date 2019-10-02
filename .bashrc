@@ -48,9 +48,8 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-if [ -f /usr/share/git/git-prompt.sh ]; then
-  source /usr/share/git/git-prompt.sh
-fi
+[ -f /usr/share/git/git-prompt.sh ] && source /usr/share/git/git-prompt.sh
+[ -f /usr/share/git-core/contrib/completion/git-prompt.sh ] && source /usr/share/git-core/contrib/completion/git-prompt.sh
 
 if [ "$color_prompt" = yes ]; then
   PROMPT_COMMAND='STATUS=$?; RELATIVE=${PWD/${ROOT_PWD}/.}; echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/${HOME}/~}/\007"'
@@ -83,11 +82,6 @@ fi
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# some more ls aliases
-alias ll='ls -l'
-alias la='ls -A'
-alias l='ls -CF'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -122,7 +116,7 @@ fi
 [ -d /usr/java/default ] && export JAVA_HOME=/usr/java/default/
 [ -d /opt/eiabox ] && { pushd /opt/eiabox; source sourceit.env; popd; } > /dev/null
 
-eval "$(thefuck --alias)"
+command -v thefuck >/dev/null && eval "$(thefuck --alias)"
 #eval "$(thefuck --alias --enable-experimental-instant-mode)"
 
 #for some nvim stuff?
