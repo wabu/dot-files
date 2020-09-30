@@ -23,10 +23,6 @@ HISTFILESIZE=2000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-shopt -s globstar
-
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color|*-256color|screen) color_prompt=yes;;
@@ -49,7 +45,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 [ -f /usr/share/git/git-prompt.sh ] && source /usr/share/git/git-prompt.sh
-[ -f /usr/share/git-core/contrib/completion/git-prompt.sh ] && source /usr/share/git-core/contrib/completion/git-prompt.sh
+[ -f /usr/local/etc/bash_completion.d/git-completion.bash ] && source /usr/local/etc/bash_completion.d/git-completion.bash
+[ -f /usr/local/etc/bash_completion.d/git-prompt.sh ] && source /usr/local/etc/bash_completion.d/git-prompt.sh
+GIT_PS1_SHOWDIRTYSTATE=true
 
 if [ "$color_prompt" = yes ]; then
   PROMPT_COMMAND='STATUS=$?; RELATIVE=${PWD/${ROOT_PWD}/.}; echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/${HOME}/~}/\007"'
@@ -62,7 +60,7 @@ if [ "$color_prompt" = yes ]; then
       *) col=33;;
   esac
 
-  PS1='\[\033[00;04m\]\u\[\033[37m\]@\[\033['$col'm\]\h\[\033[00;04;34m\] \w\[\033[00;34m\]/$(__git_ps1 " [%s]") \[\033[00;04;31m\]${STATUS/0/}\[\033[00m\]\$ \[\033[00m\]'
+  PS1='\[\033[00;04m\]${USER/danieldavis/dd}\[\033[30m\]@\[\033['$col'm\]${HOSTNAME/Daniels-MacBook-Pro.local/macbook}\[\033[00;04;34m\] \w\[\033[00;34m\]/$(__git_ps1 " [%s]") \[\033[00;04;31m\]${STATUS/0/}\[\033[00m\]\$ \[\033[00m\]'
 else
     PS1='\u@\h:\w\$ '
 fi
@@ -112,30 +110,11 @@ elif [ -x ~/install/conda/bin/conda ]; then
   export PATH=~/install/conda/bin:$PATH
 fi
 
-# enable good old eiabox
-[ -d /usr/java/default ] && export JAVA_HOME=/usr/java/default/
-[ -d /opt/eiabox ] && { pushd /opt/eiabox; source sourceit.env; popd; } > /dev/null
-
-command -v thefuck >/dev/null && eval "$(thefuck --alias)"
+#command -v thefuck >/dev/null && eval "$(thefuck --alias)"
 #eval "$(thefuck --alias --enable-experimental-instant-mode)"
 
 #for some nvim stuff?
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/wabu/install/conda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/wabu/install/conda/etc/profile.d/conda.sh" ]; then
-        . "/home/wabu/install/conda/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/wabu/install/conda/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
 # auto conda-env
 chdir() {
@@ -145,9 +124,9 @@ chdir() {
     
     name="$([ -f environment.yml ] \
             && grep name environment.yml \
-	    | sed 's/name\s*:\s*//;s/#.*$//')"
+            | sed 's/name: \(\w*\)/\1/;s/#.*$//')"
     if [[ "$name" != "$CONDA_DEFAULT_ENV" ]]; then
-        if [[ -v CONDA_AUTOENV ]] && 
+        if [[ -z "$CONDA_AUTOENV" ]] && 
            ! [[ $current/ == "$CONDA_AUTOENV"/* ]]; then
             echo ">> autoenv: leaving $CONDA_DEFAULT_ENV ($CONDA_AUTOENV)"
             conda deactivate
@@ -168,3 +147,20 @@ chdir() {
 alias cd='chdir cd'
 alias pushd='chdir pushd'
 alias popd='chdir popd'
+alias 3ls='aws s3 ls'
+alias 3ll='aws s3 ls --human-readable --summarize'
+alias 3cp='aws s3 cp'
+alias 3mv='aws s3 mv'
+alias 3sync='aws s3 sync'
+alias 3mb='aws s3 mb'
+alias 3rb='aws s3 rb'
+
+alias ls='ls -G'
+alias ll='ls -laG'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+fortune | cowsay | lolcat
+chdir
+export WKNG_ENV=local

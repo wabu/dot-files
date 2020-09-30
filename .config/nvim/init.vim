@@ -1,21 +1,23 @@
 call plug#begin('~/.local/share/nvim/plugged')
+
 "Plug 'davidhalter/jedi-vim'
 "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'zchee/deoplete-jedi'
 "Plug 'sbdchd/neoformat'
 "Plug 'tmhedberg/SimpylFold'
+"
 """" Python IDE
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'neomake/neomake'
 Plug 'janko-m/vim-test'
+Plug 'vimlab/split-term.vim'
 Plug 'alfredodeza/coveragepy.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-abolish'
-
 
 "Plug 'google/vim-maktaba'
 "Plug 'google/vim-coverage'
@@ -52,19 +54,28 @@ Plug 'scrooloose/nerdcommenter'
 """" color themes
 Plug 'ajgrf/sprinkles'
 Plug 'rakr/vim-one'
-Plug 'NLKNguyen/papercolor-theme'
+"Plug 'NLKNguyen/papercolor-theme'
+"Plug 'micha/vim-colors-solarized'
 call plug#end()
 
 nnoremap <F5> :UndotreeToggle<cr>
 
+nnoremap <leader>tf :TestFile<cr>
+nnoremap <leader>rc :Coveragepy refresh<cr>
+nnoremap <leader>sc :Coveragepy show<cr>
+
+"let test#python#pytest#executable = 'ptw --'
+let test#python#pytest#options = '--cov . --cov-report html'
+
+function! TermStrategy(cmd)
+    execute ":Term " . a:cmd
+    call feedkeys("<esc><C-w>j")
+endfunction
+
+let g:test#custom_strategies = {'term': function('TermStrategy')}
+let test#strategy = 'term'
 let test#strategy = "neomake"
 let test#python#runner = 'pytest'
-augroup test
-  autocmd!
-  autocmd BufWrite * if test#exists() |
-    \   TestFile |
-    \ endif
-augroup END
 let g:neomake_open_list = 2
 
 set number
@@ -179,19 +190,15 @@ set smarttab
 
 " Themes
 set background=light
+colorscheme sprinkles
 set t_Co=256
 let g:allow_italic = 1
-colorscheme PaperColor
-let g:airline#theme = 'papercolor'
+let g:airline_theme='sol'
+let g:airline_powerline_fonts = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_symbols = {}
-let g:airline_symbols.crypt = '◎'
-let g:airline_symbols.linenr = ''
-let g:airline_symbols.maxlinenr = ''
 
 set showtabline=2
-
 
 let g:highlightedyank_highlight_duration = 250
 
