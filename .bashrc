@@ -164,3 +164,4 @@ alias egrep='egrep --color=auto'
 fortune | cowsay | lolcat
 chdir
 export WKNG_ENV=local
+export LAB_APP=Chromium
