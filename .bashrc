@@ -102,13 +102,7 @@ if ! shopt -oq posix; then
 fi
 
 # some customizations
-export EDITOR=vim
-
-if [ -x /opt/anaconda/bin/conda ]; then
-  export PATH=/opt/anaconda/bin:$PATH
-elif [ -x ~/install/conda/bin/conda ]; then
-  export PATH=~/install/conda/bin:$PATH
-fi
+export EDITOR=nvim
 
 #command -v thefuck >/dev/null && eval "$(thefuck --alias)"
 #eval "$(thefuck --alias --enable-experimental-instant-mode)"
@@ -122,8 +116,10 @@ chdir() {
     builtin "$@"
     current="$(realpath .)"
     
-    name="$([ -f environment.yml ] \
-            && grep name environment.yml \
+    name="$(   ([ -f environment.yml ] \
+                && grep name environment.yml) \
+            || ([ -f ../environment.yml ] \
+                && grep name ../environment.yml)  \
             | sed 's/name: \(\w*\)/\1/;s/#.*$//')"
     if [[ "$name" != "$CONDA_DEFAULT_ENV" ]]; then
         if [[ -z "$CONDA_AUTOENV" ]] && 
@@ -134,7 +130,7 @@ chdir() {
         fi
 	if [[ -n "$name" ]]; then
     	    export CONDA_AUTOENV="$current"
-	    echo ">> autoenv: activating $name (environment.yaml)"
+	    echo ">> autoenv: activating $name (environment.yml)"
             conda activate "$name"
 	fi
     fi
@@ -165,3 +161,11 @@ fortune | cowsay | lolcat
 chdir
 export WKNG_ENV=local
 export LAB_APP=Chromium
+
+alias onelogin="osascript -e 'tell application \"iTerm\" to display dialog \"Password:\" with title \"Onelogin\" with hidden answer default answer \"\" with icon note' -e 'text returned of result' | (cd ~/.onelogin && xargs onelogin-aws-assume-role --onelogin-password)"
+
+mkcd () {
+    mkdir -p -- "$1" &&
+    cd -P -- "$1"
+}
+

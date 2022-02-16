@@ -1,92 +1,47 @@
-call plug#begin('~/.local/share/nvim/plugged')
+call plug#begin()
 
-"Plug 'davidhalter/jedi-vim'
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"Plug 'zchee/deoplete-jedi'
-"Plug 'sbdchd/neoformat'
-"Plug 'tmhedberg/SimpylFold'
-"
-"""" Python IDE
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'neomake/neomake'
-Plug 'janko-m/vim-test'
-Plug 'vimlab/split-term.vim'
-Plug 'alfredodeza/coveragepy.vim'
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
-Plug 'mbbill/undotree'
-Plug 'tpope/vim-abolish'
-
-"Plug 'google/vim-maktaba'
-"Plug 'google/vim-coverage'
-"Plug 'google/vim-glaive'
-"
-"""" Tools
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-rsi'
-Plug 'justinmk/vim-sneak'
-Plug 'tpope/vim-surround'
-Plug 'wellle/targets.vim'
-Plug 'tpope/vim-repeat'
-Plug 'romainl/vim-qf'
-
-
-"""" UI
-"Plug 'bling/vim-bufferline'
-"Plug 'pacha/vem-statusline'
-"Plug 'pacha/vem-tabline'
-Plug 'tpope/vim-surround'
-Plug 'machakann/vim-highlightedyank'
-Plug 'nathanaelkane/vim-indent-guides'
-
-Plug 'scrooloose/nerdtree'
-
-"""" Behaviour
-Plug 'andymass/vim-matchup'
-Plug 'cohama/lexima.vim'
+" A fuzzy file finder
+Plug 'kien/ctrlp.vim'
+" Comment/Uncomment tool
 Plug 'scrooloose/nerdcommenter'
+" Switch to the begining and the end of a block by pressing %
+Plug 'tmhedberg/matchit'
+" A Tree-like side bar for better navigation
+Plug 'scrooloose/nerdtree'
+" A cool status bar
+Plug 'vim-airline/vim-airline'
+" Airline themes
+Plug 'vim-airline/vim-airline-themes'
+" Nord
+Plug 'arcticicestudio/nord-vim'
+" Better syntax-highlighting for filetypes in vim
+Plug 'sheerun/vim-polyglot'
+" Intellisense engine
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Interactive Python buffers
+Plug 'metakirby5/codi.vim'
+" Git integration
+Plug 'tpope/vim-fugitive'
+" Auto-close braces and scopes
+Plug 'jiangmiao/auto-pairs'
 
-"""" color themes
-Plug 'ajgrf/sprinkles'
 Plug 'rakr/vim-one'
-"Plug 'NLKNguyen/papercolor-theme'
-"Plug 'micha/vim-colors-solarized'
+Plug 'rafi/awesome-vim-colorschemes'
+Plug 'flazz/vim-colorschemes'
+
 call plug#end()
 
-nnoremap <F5> :UndotreeToggle<cr>
-
-nnoremap <leader>tf :TestFile<cr>
-nnoremap <leader>rc :Coveragepy refresh<cr>
-nnoremap <leader>sc :Coveragepy show<cr>
-
-"let test#python#pytest#executable = 'ptw --'
-let test#python#pytest#options = '--cov . --cov-report html'
-
-function! TermStrategy(cmd)
-    execute ":Term " . a:cmd
-    call feedkeys("<esc><C-w>j")
-endfunction
-
-let g:test#custom_strategies = {'term': function('TermStrategy')}
-let test#strategy = 'term'
-let test#strategy = "neomake"
-let test#python#runner = 'pytest'
-let g:neomake_open_list = 2
 
 set number
 set list
-
-" COC
-set hidden
-set cmdheight=2
-set updatetime=200
-set shortmess+=c
+set mouse=a
 set signcolumn=yes
+
+filetype plugin indent on
+syntax on
+
+
+" Completion with tab and space
 inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
@@ -106,16 +61,27 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
+" Code action on <leader>a
+vmap <leader>a <Plug>(coc-codeaction-selected)<CR>
+nmap <leader>a <Plug>(coc-codeaction-selected)<CR>
+
+" Remap for rename
+nmap <leader>rn <Plug>(coc-rename)
+
+" Format action on <leader>f
+vmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+vmap <leader>F  <Plug>(coc-format-document)
+nmap <leader>F  <Plug>(coc-format-document)
+
+" Goto definition
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+" Open definition in a split window
+nmap <silent> gv :split<CR><Plug>(coc-definition)<C-W>L
 
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
-" Remap for format selected region
-vmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
 
 nmap <silent>gt :bn<Cr>
 nmap <silent>gT :bp<Cr>
@@ -131,79 +97,29 @@ nmap <silent><A-8> :b 8<Cr>
 nmap <silent><A-9> :b 9<Cr>
 nmap <silent><A-0> :b 10<Cr>
 
-let g:coveragepy_uncovered_sign = '⌦'
-
-
 command! -nargs=0 Format :call CocAction('format')
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 command! -nargs=? Lint :CocList diagnostics
 
-set completeopt=menuone,preview
-set previewheight=4
-set pumheight=12
-set showfulltag
 
-" Lint
-let g:neomake_python_enabled_makers = ['pylint']
-call neomake#configure#automake('w')
-nmap <silent> gn :NeomakeNextLoclist<Cr>
-nmap <silent> gp :NeomakePrevLoclist<Cr>
-
-
-nmap <silent><C-k><C-k> :b#<Cr>
-nmap <silent><C-k> :CtrlPMixed<Cr>
-nmap <silent><C-p> :CtrlPTag<Cr>
-let g:ctrlp_reuse_window = 'quickfix'
-let g:ctrlp_prompt_mappings = {
-        \ 'PrtSelectMove("k")': ['<c-k>', '<up>', '<tab>']
-        \}
-
-set mouse=a
-
-"Code folding
-set foldmethod=manual
-
-"Tabs and spacing
-set autoindent
-set cindent
-set tabstop=4
-set expandtab
-set shiftwidth=4
-set smarttab
-
-
-" Completion
-"let g:deoplete#enable_at_startup = 1
-""" tab do go through completion
-"inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-""" close preview automatically
-"autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-" Alignment
-"let g:neoformat_basic_format_align = 1
-"let g:neoformat_basic_format_retab = 1
-"let g:neoformat_basic_format_trim = 1
-
-" JEDI
-"let g:jedi#completions_enabled = 0
-"let g:jedi#use_splits_not_buffers = "right"
-
-" Themes
+" Theme settings
 set background=light
-colorscheme sprinkles
+colorscheme PaperColor
 set t_Co=256
 let g:allow_italic = 1
-let g:airline_theme='sol'
+let g:airline_theme='papercolor'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 
 set showtabline=2
 
-let g:highlightedyank_highlight_duration = 250
-
+" Nerd Tree
 map <F3> :NERDTreeFocus<CR>
 let NERDTreeIgnore=['__pycache__', '.*\.egg-info']
+
+autocmd FileType py autocmd BufWritePre <buffer> %s/\s\+$//e
+autocmd BufWritePre .* :call CocAction('runCommand', 'editor.action.organizeImport')
+
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-

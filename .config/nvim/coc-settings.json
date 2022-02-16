@@ -1,6 +1,9 @@
 {
-    "python.autoComplete.addBrackets": true,
-    "python.linting.pylamaEnabled": false,
-    "python.linting.pylintEnabled": false,
-    "suggest.enablePreview": true
+  "coc.preferences.formatOnSaveFiletypes": ["py", "yaml", "json"],
+  "python.linting.flake8Enabled": true,
+  "python.formatting.provider": "black",
+  "coc.preferences.formatOnSaveFiletypes": ["python"],
+  "cSpell.userWords": [
+  ]
 }
+
