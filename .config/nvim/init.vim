@@ -118,7 +118,9 @@ set showtabline=2
 map <F3> :NERDTreeFocus<CR>
 let NERDTreeIgnore=['__pycache__', '.*\.egg-info']
 
+# remove whitespaces at the end of line
 autocmd FileType py autocmd BufWritePre <buffer> %s/\s\+$//e
+# organize imports
 autocmd BufWritePre .* :call CocAction('runCommand', 'editor.action.organizeImport')
 
 autocmd StdinReadPre * let s:std_in=1

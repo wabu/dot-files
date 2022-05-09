@@ -117,10 +117,11 @@ chdir() {
     current="$(realpath .)"
     
     name="$(   ([ -f environment.yml ] \
-                && grep name environment.yml) \
+                && grep name environment.yml \
+                | sed 's/ *name: *//;s/ *#.*$//') \
             || ([ -f ../environment.yml ] \
                 && grep name ../environment.yml)  \
-            | sed 's/name: \(\w*\)/\1/;s/#.*$//')"
+                | sed 's/ *name: *//;s/ *#.*$//')"
     if [[ "$name" != "$CONDA_DEFAULT_ENV" ]]; then
         if [[ -z "$CONDA_AUTOENV" ]] && 
            ! [[ $current/ == "$CONDA_AUTOENV"/* ]]; then
@@ -162,7 +163,8 @@ chdir
 export WKNG_ENV=local
 export LAB_APP=Chromium
 
-alias onelogin="osascript -e 'tell application \"iTerm\" to display dialog \"Password:\" with title \"Onelogin\" with hidden answer default answer \"\" with icon note' -e 'text returned of result' | (cd ~/.onelogin && xargs onelogin-aws-assume-role --onelogin-password)"
+#alias onelogin="osascript -e 'tell application \"iTerm\" to display dialog \"Password:\" with title \"Onelogin\" with hidden answer default answer \"\" with icon note' -e 'text returned of result' | (cd ~/.onelogin && onelogin-aws-assume-role --onelogin-password)"
+alias onelogin="(cd ~/.onelogin && xargs onelogin-aws-assume-role)"
 
 mkcd () {
     mkdir -p -- "$1" &&
