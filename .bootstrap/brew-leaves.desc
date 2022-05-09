@@ -1,0 +1,56 @@
+bash-completion: Programmable completion for Bash 3.2
+bash-git-prompt: Informative, fancy bash prompt for Git users
+brew-cask-completion: Fish completion for brew-cask
+calc: Arbitrary precision calculator
+cmake: Cross-platform make
+coreutils: GNU File, Shell, and Text utilities
+cowsay: Configurable talking characters in ASCII art
+ctags: Reimplementation of ctags(1)
+devtodo: Command-line task lists
+dnsmasq: Lightweight DNS forwarder and DHCP server
+docker: Pack, ship and run any application as a lightweight container
+docker-compose: Isolated development environments using Docker
+docker-compose-completion: Completion script for docker-compose
+duck: Command-line interface for Cyberduck (a multi-protocol file transfer tool)
+pam_reattach: PAM module for reattaching to the user's GUI (Aqua) session
+ffmpeg@4: Play, record, convert, and stream audio and video
+figlet: Banner-like program prints strings as ASCII art
+fortune: Infamous electronic fortune-cookie generator
+geeqie: Lightweight Gtk+ based image viewer
+gh: GitHub command-line tool
+git: Distributed revision control system
+gitg: GNOME GUI client to view git repositories
+gnupg: GNU Pretty Good Privacy (PGP) package
+lolcat: Rainbows and unicorns in your console!
+lsyncd: Synchronize local directories with remote targets
+mercurial: Scalable distributed version control system
+neovim: Ambitious Vim-fork focused on extensibility and agility
+netcat: Utility for managing network connections
+nmap: Port scanning utility for large networks
+openjdk@8: Development kit for the Java programming language
+pinentry-mac: Pinentry for GPG on Mac
+pip-completion: Bash completion for Pip
+poetry: Python package management tool
+postgresql: Object-relational database system
+pritunl-ssh: Pritunl Zero SSH Client
+pstree: Show ps output as a tree
+pwgen: Password generator
+python@3.7: Interpreted, interactive, object-oriented programming language
+rancher-cli: Unified tool to manage your Rancher server
+rsync: Utility that provides fast incremental file transfer
+s3fs: FUSE-based file system backed by Amazon S3
+scala: JVM-based programming language
+smartmontools: SMART hard drive monitoring
+smimesign: S/MIME signing utility for use with Git
+tcpdump: Command-line packet analyzer
+telnet: User interface to the TELNET protocol
+terminator: Multiple GNOME terminals in one window
+terraform: Tool to build, change, and version infrastructure
+thefuck: Programmatically correct mistyped console commands
+tldr: Simplified and community-driven man pages
+tmux: Terminal multiplexer
+vte: Terminal emulator widget used by GNOME terminal
+watch: Executes a program periodically, showing output fullscreen
+wget: Internet file retriever
+wtf: Translate common Internet acronyms
+youtube-dl: Download YouTube videos from the command-line
